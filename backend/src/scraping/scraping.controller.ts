@@ -1,5 +1,7 @@
-import { Controller, Param, Post, Get } from '@nestjs/common';
+import { Controller, Param, Post, Get, Body } from '@nestjs/common';
 import { ScrapingService } from './scraping.service';
+import { CreateScrapingDto } from './dto/create-scraping.dto';
+
 
 @Controller('scraping')
 export class ScrapingController {
@@ -8,8 +10,11 @@ export class ScrapingController {
     ) { }
 
     @Post('test')
-    createTestJob() {
-        return this.scrapingService.createJob();
+    createTestJob(@Body() dto: CreateScrapingDto) {
+        return {
+            what: dto.what,
+            where: dto.where,
+        };
     }
 
     @Get(':jobId')
