@@ -4,6 +4,7 @@ import { HttpService } from '@nestjs/axios';
 import { firstValueFrom } from 'rxjs';
 import { parse } from 'csv-parse/sync';
 import { BusinessesService } from '../businesses/businesses.service';
+import { GeocodingService } from '../geocoding/geocoding.service';
 
 @Injectable()
 export class ScrapingService {
@@ -13,6 +14,7 @@ export class ScrapingService {
         private readonly httpService: HttpService,
         private readonly configService: ConfigService,
         private readonly businessesService: BusinessesService,
+        private readonly geocodingService: GeocodingService,
     ) {
         this.scraperBaseUrl =
             this.configService.get<string>('SCRAPER_BASE_URL') ??
