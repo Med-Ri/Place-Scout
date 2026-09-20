@@ -11,10 +11,7 @@ export class ScrapingController {
 
     @Post('test')
     createTestJob(@Body() dto: CreateScrapingDto) {
-        return {
-            what: dto.what,
-            where: dto.where,
-        };
+        return this.scrapingService.createJob(dto.what, dto.where);
     }
 
     @Get(':jobId')

@@ -19,11 +19,11 @@ export class ScrapingService {
             '';
     }
 
-    async createJob() {
+    async createJob(what: string, where: string) {
         const response = await firstValueFrom(
             this.httpService.post(`${this.scraperBaseUrl}/api/v1/jobs`, {
                 name: 'placescout-test',
-                keywords: ['Italian restaurants'],
+                keywords: [what],
                 lang: 'en',
                 zoom: 14,
                 lat: '48.8566',
