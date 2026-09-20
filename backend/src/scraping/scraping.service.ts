@@ -46,4 +46,17 @@ export class ScrapingService {
 
         return response.data;
     }
+
+    async downloadJobResults(jobId: string) {
+        const response = await firstValueFrom(
+            this.httpService.get(
+                `${this.scraperBaseUrl}/api/v1/jobs/${jobId}/download`,
+                {
+                    responseType: 'text',
+                },
+            ),
+        );
+
+        return response.data;
+    }
 }
