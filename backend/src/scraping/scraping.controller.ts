@@ -1,4 +1,4 @@
-import { Controller, Post } from '@nestjs/common';
+import { Controller, Param, Post, Get } from '@nestjs/common';
 import { ScrapingService } from './scraping.service';
 
 @Controller('scraping')
@@ -10,5 +10,10 @@ export class ScrapingController {
     @Post('test')
     createTestJob() {
         return this.scrapingService.createJob();
+    }
+
+    @Get(':jobId')
+    getJobStatus(@Param('jobId') jobId: string) {
+        return this.scrapingService.getJobStatus(jobId);
     }
 }
