@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { HttpService } from '@nestjs/axios';
 import { firstValueFrom } from 'rxjs';
+import { parse } from 'csv-parse/sync';
 
 @Injectable()
 export class ScrapingService {
@@ -57,6 +58,32 @@ export class ScrapingService {
             ),
         );
 
-        return response.data;
+        return parse(response.data, {
+            columns: true,
+            skip_empty_lines: true,
+        });
+    }
+
+    private mapScraperBusiness(row: Record<string, string>) {
+        return {
+            name: row.title?.trim(),
+            category: row.category?.trim() || undefined,
+            address: row.address?.trim() || undefined,
+            phone: row.phone?.trim() || undefined,
+            website: row.website?.trim() || undefined,
+            rating: row.review_rating
+                ? Number(row.review_rating)
+                : undefined,
+            reviewCount: row.review_count
+                ? Number(row.review_count)
+                : undefined,
+            latitude: row.latitude
+                ? Number(row.latitude)
+                : undefined,
+            longitude: row.longitude
+                ? Number(row.longitude)
+                : undefined,
+            googleMapsUrl: row.link?.trim() || undefined,
+        };
     }
 }
