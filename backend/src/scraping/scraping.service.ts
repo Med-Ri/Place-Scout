@@ -22,14 +22,15 @@ export class ScrapingService {
     }
 
     async createJob(what: string, where: string) {
+        const coordinates = await this.geocodingService.getCoordinates(where);
         const response = await firstValueFrom(
             this.httpService.post(`${this.scraperBaseUrl}/api/v1/jobs`, {
                 name: 'placescout-test',
                 keywords: [what],
                 lang: 'en',
                 zoom: 14,
-                lat: '48.8566',
-                lon: '2.3522',
+                lat: String(coordinates.lat),
+                lon: String(coordinates.lon),
                 fast_mode: true,
                 radius: 5000,
                 depth: 1,
