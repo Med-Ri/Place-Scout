@@ -25,7 +25,7 @@ export class ScrapingService {
         const coordinates = await this.geocodingService.getCoordinates(where);
         const response = await firstValueFrom(
             this.httpService.post(`${this.scraperBaseUrl}/api/v1/jobs`, {
-                name: 'placescout-test',
+                name:`${what} in ${where}`,
                 keywords: [what],
                 lang: 'en',
                 zoom: 14,
