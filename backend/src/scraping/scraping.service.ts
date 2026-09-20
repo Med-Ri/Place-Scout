@@ -3,6 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { HttpService } from '@nestjs/axios';
 import { firstValueFrom } from 'rxjs';
 import { parse } from 'csv-parse/sync';
+import { BusinessesService } from '../businesses/businesses.service';
 
 @Injectable()
 export class ScrapingService {
@@ -11,6 +12,7 @@ export class ScrapingService {
     constructor(
         private readonly httpService: HttpService,
         private readonly configService: ConfigService,
+        private readonly businessesService: BusinessesService,
     ) {
         this.scraperBaseUrl =
             this.configService.get<string>('SCRAPER_BASE_URL') ??
@@ -61,7 +63,7 @@ export class ScrapingService {
         return parse(response.data, {
             columns: true,
             skip_empty_lines: true,
-        });
+        }) as Record<string, string>[];
     }
 
     private mapScraperBusiness(row: Record<string, string>) {
@@ -85,5 +87,24 @@ export class ScrapingService {
                 : undefined,
             googleMapsUrl: row.link?.trim() || undefined,
         };
+    }
+
+    async saveJobResults(jobId: string) {
+        const rows = await this.downloadJobResults(jobId);
+
+        const businesses = rows
+            .map((row: Record<string, string>) =>
+                this.mapScraperBusiness(row),
+            )
+            .filter((business) => business.name);
+
+        const savedBusinesses = [];
+
+        for (const business of businesses) {
+            const saved = await this.businessesService.create(business);
+            savedBusinesses.push(saved);
+        }
+
+        return savedBusinesses;
     }
 }

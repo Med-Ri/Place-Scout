@@ -21,4 +21,9 @@ export class ScrapingController {
     getJobResults(@Param('jobId') jobId: string) {
         return this.scrapingService.downloadJobResults(jobId);
     }
+
+    @Post(':jobId/save')
+    saveJobResults(@Param('jobId') jobId: string) {
+        return this.scrapingService.saveJobResults(jobId);
+    }
 }
