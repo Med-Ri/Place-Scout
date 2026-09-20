@@ -3,9 +3,13 @@ import { HttpModule } from '@nestjs/axios';
 
 import { ScrapingController } from './scraping.controller';
 import { ScrapingService } from './scraping.service';
+import { BusinessesModule } from '../businesses/businesses.module';
 
 @Module({
-  imports: [HttpModule],
+  imports: [
+    HttpModule,
+    BusinessesModule,
+  ],
   controllers: [ScrapingController],
   providers: [ScrapingService],
 })
