@@ -4,6 +4,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 
 import { ScrapingModule } from './scraping/scraping.module';
 import { BusinessesModule } from './businesses/businesses.module';
+import { GeocodingModule } from './geocoding/geocoding.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { BusinessesModule } from './businesses/businesses.module';
 
     BusinessesModule,
     ScrapingModule,
+    GeocodingModule,
   ],
 })
 export class AppModule {}
