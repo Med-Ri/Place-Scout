@@ -16,4 +16,9 @@ export class ScrapingController {
     getJobStatus(@Param('jobId') jobId: string) {
         return this.scrapingService.getJobStatus(jobId);
     }
+
+    @Get(':jobId/results')
+    getJobResults(@Param('jobId') jobId: string) {
+        return this.scrapingService.downloadJobResults(jobId);
+    }
 }
