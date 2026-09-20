@@ -2,9 +2,9 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 
-import { ScrapingModule } from './scraping/scraping.module';
-import { BusinessesModule } from './businesses/businesses.module';
-import { GeocodingModule } from './geocoding/geocoding.module';
+import { ScrapingModule } from './scraping/scraping.module.js';
+import { BusinessesModule } from './businesses/businesses.module.js';
+import { GeocodingModule } from './geocoding/geocoding.module.js';
 
 @Module({
   imports: [

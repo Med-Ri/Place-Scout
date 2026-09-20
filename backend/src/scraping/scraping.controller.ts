@@ -1,6 +1,6 @@
 import { Controller, Param, Post, Get, Body } from '@nestjs/common';
-import { ScrapingService } from './scraping.service';
-import { CreateScrapingDto } from './dto/create-scraping.dto';
+import { ScrapingService } from './scraping.service.js';
+import { CreateScrapingDto } from './dto/create-scraping.dto.js';
 
 
 @Controller('scraping')

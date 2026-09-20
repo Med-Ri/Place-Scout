@@ -5,7 +5,7 @@ import { Model } from 'mongoose';
 import {
     Business,
     BusinessDocument,
-} from './schemas/business.schema';
+} from './schemas/business.schema.js';
 
 @Injectable()
 export class BusinessesService {

@@ -3,8 +3,8 @@ import { ConfigService } from '@nestjs/config';
 import { HttpService } from '@nestjs/axios';
 import { firstValueFrom } from 'rxjs';
 import { parse } from 'csv-parse/sync';
-import { BusinessesService } from '../businesses/businesses.service';
-import { GeocodingService } from '../geocoding/geocoding.service';
+import { BusinessesService } from '../businesses/businesses.service.js';
+import { GeocodingService } from '../geocoding/geocoding.service.js';
 
 @Injectable()
 export class ScrapingService {
