@@ -94,20 +94,23 @@ export class ScrapingService {
 
     async saveJobResults(jobId: string) {
         const rows = await this.downloadJobResults(jobId);
-
+    
         const businesses = rows
             .map((row: Record<string, string>) =>
                 this.mapScraperBusiness(row),
             )
             .filter((business) => business.name);
-
+    
         const savedBusinesses = [];
-
+    
         for (const business of businesses) {
-            const saved = await this.businessesService.create(business);
+            const saved = await this.businessesService.create({
+                ...business,
+                searchId: jobId,
+            });
             savedBusinesses.push(saved);
         }
-
+    
         return savedBusinesses;
     }
 }
