@@ -17,6 +17,7 @@ export class GeocodingService {
                         q: place,
                         format: 'json',
                         limit: 1,
+                        addressdetails: 1,
                     },
                     headers: {
                         'User-Agent': 'PlaceScout/1.0',
@@ -32,12 +33,6 @@ export class GeocodingService {
                 `Location not found: ${place}`,
             );
         }
-
-        console.log({
-            place,
-            lat: Number(result.lat),
-            lon: Number(result.lon),
-        });
 
         return {
             lat: Number(result.lat),
