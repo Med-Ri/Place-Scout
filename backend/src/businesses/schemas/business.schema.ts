@@ -42,6 +42,9 @@ export class Business {
 
     @Prop()
     googleMapsUrl?: string;
+
+    @Prop({ trim: true })
+    searchId?: string;
 }
 
 export const BusinessSchema = SchemaFactory.createForClass(Business);
