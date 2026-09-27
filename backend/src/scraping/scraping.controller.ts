@@ -14,6 +14,14 @@ export class ScrapingController {
         return this.scrapingService.createJob(dto.what, dto.where);
     }
 
+    @Post()
+    createAndSaveJob(@Body() dto: CreateScrapingDto) {
+        return this.scrapingService.createAndSaveJob(
+            dto.what,
+            dto.where,
+        );
+    }
+
     @Get(':jobId')
     getJobStatus(@Param('jobId') jobId: string) {
         return this.scrapingService.getJobStatus(jobId);
