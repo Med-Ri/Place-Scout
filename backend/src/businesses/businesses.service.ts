@@ -20,7 +20,12 @@ export class BusinessesService {
         return business.save();
     }
 
-    async findAll() {
-        return this.businessModel.find().sort({ createdAt: -1 }).lean();
+    async findAll(searchId?: string) {
+        const filter = searchId ? { searchId } : {};
+    
+        return this.businessModel
+            .find(filter)
+            .sort({ createdAt: -1 })
+            .lean();
     }
 }

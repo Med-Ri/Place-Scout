@@ -1,5 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
-
+import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { BusinessesService } from './businesses.service.js';
 import { Business } from './schemas/business.schema.js';
 
@@ -15,7 +14,7 @@ export class BusinessesController {
     }
 
     @Get()
-    findAll() {
-        return this.businessesService.findAll();
+    findAll(@Query('searchId') searchId?: string) {
+        return this.businessesService.findAll(searchId);
     }
 }
