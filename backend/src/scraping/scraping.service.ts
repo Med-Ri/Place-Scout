@@ -43,6 +43,14 @@ export class ScrapingService {
         return response.data;
     }
 
+    async createAndSaveJob(what: string, where: string) {
+        const job = await this.createJob(what, where);
+    
+        const jobId = job.id;
+    
+        return this.saveJobResults(jobId);
+    }
+    
     async getJobStatus(jobId: string) {
         const response = await firstValueFrom(
             this.httpService.get(
