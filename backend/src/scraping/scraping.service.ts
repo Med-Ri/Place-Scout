@@ -48,9 +48,17 @@ export class ScrapingService {
     
         const jobId = job.id;
     
+        let status = await this.getJobStatus(jobId);
+    
+        while (status.Status !== 'ok') {
+            await new Promise((resolve) => setTimeout(resolve, 2000));
+    
+            status = await this.getJobStatus(jobId);
+        }
+    
         return this.saveJobResults(jobId);
     }
-    
+
     async getJobStatus(jobId: string) {
         const response = await firstValueFrom(
             this.httpService.get(
