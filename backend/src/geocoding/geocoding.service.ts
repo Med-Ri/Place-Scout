@@ -33,6 +33,12 @@ export class GeocodingService {
             );
         }
 
+        console.log({
+            place,
+            lat: Number(result.lat),
+            lon: Number(result.lon),
+        });
+
         return {
             lat: Number(result.lat),
             lon: Number(result.lon),
