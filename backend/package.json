@@ -7,12 +7,12 @@
   "license": "UNLICENSED",
   "type": "module",
   "scripts": {
-    "build": "nest build",
+    "build": "rm -rf dist tsconfig.build.tsbuildinfo && tsc -p tsconfig.build.json",
     "deploy": "nest deploy",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "start": "nest start",
-    "start:dev": "nest start --watch",
-    "start:debug": "nest start --debug --watch",
+    "start": "npm run build && node dist/main.js",
+    "start:dev": "bash scripts/start-dev.sh",
+    "start:debug": "npm run build && node --inspect --watch dist/main.js",
     "start:prod": "node dist/main.js",
     "lint": "oxlint --type-aware src/ test/",
     "test": "vitest run",
@@ -20,6 +20,9 @@
     "test:cov": "vitest run --coverage",
     "test:debug": "vitest --inspect-brk --no-file-parallelism",
     "test:e2e": "vitest run --config ./vitest.config.e2e.ts"
+  },
+  "overrides": {
+    "ora": "5.4.1"
   },
   "dependencies": {
     "@nestjs/axios": "^12.0.1",

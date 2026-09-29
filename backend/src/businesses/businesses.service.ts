@@ -20,9 +20,18 @@ export class BusinessesService {
         return business.save();
     }
 
+    async createMany(data: Partial<Business>[]) {
+        if (data.length === 0) {
+            return [] as BusinessDocument[];
+        }
+
+        const inserted = await this.businessModel.insertMany(data);
+        return inserted as BusinessDocument[];
+    }
+
     async findAll(searchId?: string) {
         const filter = searchId ? { searchId } : {};
-    
+
         return this.businessModel
             .find(filter)
             .sort({ createdAt: -1 })

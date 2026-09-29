@@ -43,7 +43,7 @@ export class Business {
     @Prop()
     googleMapsUrl?: string;
 
-    @Prop({ trim: true })
+    @Prop({ trim: true, index: true })
     searchId?: string;
 }
 
