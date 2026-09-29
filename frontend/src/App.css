@@ -308,9 +308,98 @@ input:focus-visible {
 }
 
 .results-count {
-  margin: 0 0 0.85rem;
+  margin: 0;
   font-weight: 700;
   color: var(--brand);
+}
+
+.results-list__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.85rem;
+}
+
+.results-list__downloads {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.download-btn {
+  appearance: none;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0.45rem 0.9rem;
+  background: var(--surface-solid);
+  color: var(--brand);
+  font-weight: 600;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.download-btn:hover {
+  background: rgba(11, 61, 58, 0.06);
+  border-color: rgba(11, 61, 58, 0.35);
+  transform: translateY(-1px);
+}
+
+.download-btn--primary {
+  background: var(--brand);
+  border-color: var(--brand);
+  color: #f7fbf9;
+}
+
+.download-btn--primary:hover {
+  background: var(--brand-soft);
+  border-color: var(--brand-soft);
+  color: #f7fbf9;
+}
+
+.export-status,
+.export-hint {
+  margin: 0 0 0.75rem;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.export-status {
+  color: var(--brand-soft);
+  font-weight: 600;
+}
+
+.business-card__coords-note {
+  margin: 0.35rem 0 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-style: italic;
+}
+
+.business-card__note-field {
+  display: grid;
+  gap: 0.35rem;
+  padding: 0 1rem 0.75rem;
+}
+
+.business-card__note-field label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--brand);
+}
+
+.business-card__note-field textarea {
+  width: 100%;
+  resize: vertical;
+  min-height: 2.5rem;
+  padding: 0.55rem 0.65rem;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--ink);
+  font: inherit;
 }
 
 .results-list__items {

@@ -1,5 +1,9 @@
 import { useRef, useState } from 'react'
 import { startSearch } from './api.js'
+import {
+  downloadBusinessesCsv,
+  saveBusinessesCsv,
+} from './download.js'
 import { SearchForm } from './components/SearchForm.jsx'
 import { ResultsList } from './components/ResultsList.jsx'
 import { ResultsMap } from './components/ResultsMap.jsx'
@@ -15,6 +19,8 @@ function App() {
   const [result, setResult] = useState(null)
   const [selectedId, setSelectedId] = useState(null)
   const [lastQuery, setLastQuery] = useState({ what: '', where: '' })
+  const [notesById, setNotesById] = useState({})
+  const [exportStatus, setExportStatus] = useState(null)
   const abortRef = useRef(null)
 
   async function handleSearch({ what, where }) {
@@ -26,6 +32,8 @@ function App() {
     setError(null)
     setResult(null)
     setSelectedId(null)
+    setNotesById({})
+    setExportStatus(null)
     setLastQuery({ what, where })
 
     try {
@@ -57,6 +65,47 @@ function App() {
       `[data-business-id="${CSS.escape(businessKey(business))}"]`,
     )
     el?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+  }
+
+  function exportMeta() {
+    return {
+      what: lastQuery.what,
+      where: lastQuery.where,
+      searchId: result?.searchId,
+    }
+  }
+
+  function handleNoteChange(id, value) {
+    setNotesById((current) => ({ ...current, [id]: value }))
+  }
+
+  function handleDownloadCsv() {
+    if (!result?.businesses?.length) return
+    downloadBusinessesCsv(result.businesses, exportMeta(), notesById)
+    setExportStatus('CSV downloaded to your browser downloads folder.')
+  }
+
+  async function handleSaveToFolder() {
+    if (!result?.businesses?.length) return
+    const outcome = await saveBusinessesCsv(
+      result.businesses,
+      exportMeta(),
+      notesById,
+    )
+
+    if (outcome.method === 'cancelled') {
+      setExportStatus(null)
+      return
+    }
+
+    if (outcome.method === 'folder') {
+      setExportStatus(
+        `Saved${outcome.name ? ` as ${outcome.name}` : ''}. Choose a Google Drive, Dropbox, or OneDrive folder in the dialog to sync it to the cloud.`,
+      )
+      return
+    }
+
+    setExportStatus('CSV downloaded to your browser downloads folder.')
   }
 
   const hasResults = Boolean(result)
@@ -126,6 +175,11 @@ function App() {
                 businesses={result.businesses}
                 selectedId={selectedId}
                 onSelect={handleSelect}
+                notesById={notesById}
+                onNoteChange={handleNoteChange}
+                onDownloadCsv={handleDownloadCsv}
+                onSaveToFolder={handleSaveToFolder}
+                exportStatus={exportStatus}
               />
               <ResultsMap
                 businesses={result.businesses}

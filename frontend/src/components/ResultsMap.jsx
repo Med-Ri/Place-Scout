@@ -30,7 +30,10 @@ export function ResultsMap({ businesses, selectedId, onSelect }) {
   const layerRef = useRef(null);
 
   const onSelectRef = useRef(onSelect);
-  onSelectRef.current = onSelect;
+
+  useEffect(() => {
+    onSelectRef.current = onSelect;
+  }, [onSelect]);
 
   const mappable = (businesses || []).filter(hasValidCoordinates);
 

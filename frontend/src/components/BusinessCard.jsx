@@ -10,6 +10,8 @@ export function BusinessCard({
   business,
   selected = false,
   onSelect,
+  note = '',
+  onNoteChange,
 }) {
   const ratingLabel = formatRating(business.rating);
   const website = isSafeHttpUrl(business.website)
@@ -19,6 +21,7 @@ export function BusinessCard({
     ? business.googleMapsUrl
     : null;
   const id = business._id ?? business.id ?? business.name;
+  const noteId = `note-${id}`;
 
   return (
     <article
@@ -64,16 +67,31 @@ export function BusinessCard({
 
         {business.phone ? (
           <p className="business-card__phone">
-            <a href={`tel:${business.phone.replace(/\s+/g, '')}`}>
+            <a
+              href={`tel:${business.phone.replace(/\s+/g, '')}`}
+              onClick={(event) => event.stopPropagation()}
+            >
               {business.phone}
             </a>
           </p>
         ) : null}
 
         {!hasValidCoordinates(business) ? (
-          <p className="business-card__note">No map coordinates</p>
+          <p className="business-card__coords-note">No map coordinates</p>
         ) : null}
       </button>
+
+      <div className="business-card__note-field">
+        <label htmlFor={noteId}>Note</label>
+        <textarea
+          id={noteId}
+          rows={2}
+          value={note}
+          placeholder="Optional note for this business…"
+          onChange={(event) => onNoteChange?.(event.target.value)}
+          onClick={(event) => event.stopPropagation()}
+        />
+      </div>
 
       {(website || mapsUrl) && (
         <div className="business-card__links">
